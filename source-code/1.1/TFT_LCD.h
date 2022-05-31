@@ -718,7 +718,7 @@ void LCD_UkurInduktansi()
   tft.setCursor(140, 100);
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(2);
-  tft.println(inductance); 
+  tft.println(averageInd1); 
 
   tft.setRotation(3);
   tft.setCursor(250, 100);
@@ -736,7 +736,7 @@ void LCD_UkurInduktansi()
   tft.setCursor(140, 130);
   tft.setTextColor(ILI9341_WHITE);
   tft.setTextSize(2);
-  tft.println(inductance2); 
+  tft.println(averageInd2); 
 
   tft.setRotation(3);
   tft.setCursor(250, 130);
@@ -778,9 +778,9 @@ void LCD_HasilUji()
   tft.setTextSize(1);
   tft.println("D : Home"); 
   
-//  tft.setRotation(3);
-//  tft.setCursor(10, 130);
-//  tft.setTextColor(ILI9341_WHITE);
-//  tft.setTextSize(2);
-//  tft.println(" "); 
+  tft.setRotation(3);
+  tft.setCursor(10, 130);
+  tft.setTextColor(ILI9341_WHITE);
+  tft.setTextSize(2);
+  tft.println(" "); 
 }

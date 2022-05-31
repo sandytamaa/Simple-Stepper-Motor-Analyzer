@@ -10,7 +10,7 @@
 #define pulseIN2          PC6
 
 int failure;
-int i, j;
+int i, j, k;
 int simpanArus[10240];
 int simpanArus2[10240];
 int simpanArusSementara;
@@ -30,8 +30,8 @@ double amplitudeAatas, amplitudeBatas;
 double amplitudeAbawah, amplitudeBbawah;
 double Apeaktopeak, Bpeaktopeak;
 
-double pulse, frequency, capacitance, inductance;
-double pulse2, frequency2, capacitance2, inductance2;
+double pulse, frequency, capacitance, inductance, averageInd1;
+double pulse2, frequency2, capacitance2, inductance2, averageInd2;
 
 // #include <STM32FreeRTOS.h>
 #include "TFT_LCD.h"
@@ -203,7 +203,7 @@ void loop() {
 
   delay(100);
 
-  while(i<102400 && revolution>0)
+  while(i<32000 && revolution>0)
   {
     driveStepperCCW();
 
@@ -244,10 +244,10 @@ void loop() {
         amplitudeBbawah=simpanArus2[i/10]-2047;
       }
 
-      tft.fillRect(14, j, 225, 5, ILI9341_BLACK);
+      tft.fillRect(20, j, 225, 5, ILI9341_BLACK);
 
-      xt2=simpanArus[i/10]/17.1;
-      xt22=simpanArus2[i/10]/17.1;
+      xt2=simpanArus[i/10]/9-120;
+      xt22=simpanArus2[i/10]/9-120;
       yt2=j;
 //      Serial.print(xt1);
 //      Serial.print("\t");
@@ -271,7 +271,7 @@ void loop() {
     }
     
     i++;
-    if(i==102399)
+    if(i==31999)
     {
       i=0;
       revolution--;
@@ -325,15 +325,15 @@ void loop() {
 
 // -----------------------------
 
-  inductance=0;
-  inductance2=0;
+  averageInd1=0;
+  averageInd2=0;
   
   if(failure==0)
   {
     loadingScreen();
 
     cekInductance();
-    inductanceError=abs(inductance-inductance2)/((inductance+inductance2)/2);
+    inductanceError=abs(averageInd1-averageInd2)/((averageInd1+averageInd2)/2);
     if(inductanceError>0.25)
     {
       failure+=1;
@@ -406,7 +406,7 @@ void loop() {
   {
     tft.println("Not Tested");
   }
-  else if(inductanceError>0.1)
+  else if(inductanceError>0.3)
   {
     tft.println("NOT Good"); 
   }
